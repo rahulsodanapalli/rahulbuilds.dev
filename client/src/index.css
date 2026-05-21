@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+
+  --color-cream: #F6F3EE;
+  --color-deep-black: #111111;
+  --color-burnt-orange: #C76B37;
+  --color-secondary-gray: #6D645B;
+  --color-card-white: #FFFFFF;
+  --color-border-cream: #E7DED4;
+
+  --color-heading: #111111;
+  --color-body: #555555;
+  --color-muted: #8B837A;
+
+  --shadow-minimal: 0 2px 8px rgba(17, 17, 17, 0.02), 0 1px 3px rgba(17, 17, 17, 0.01);
+  --shadow-minimal-hover: 0 16px 36px rgba(17, 17, 17, 0.05), 0 2px 8px rgba(17, 17, 17, 0.02);
+}
+
+/* Custom Base Styles */
+html {
+  scroll-behavior: auto !important; /* Lenis handles smooth scroll */
+  background-color: #F6F3EE;
+  color: #111111;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #F6F3EE;
+  color: #111111;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium paper noise texture overlay for high-end editorial feel */
+.bg-noise {
+  /* SVG noise filter removed to prioritize maximum 60FPS scroll performance */
+  /* background-image: url(...); */
+}
+
+/* Custom horizontal scrolling timeline container */
+.horizontal-scroll-container {
+  display: flex;
+  will-change: transform;
+}
+
+/* Custom clean scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F6F3EE;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E7DED4;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C76B37;
+}
+
+/* Scrollbar None utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}

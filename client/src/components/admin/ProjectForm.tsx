@@ -10,6 +10,7 @@ import {
   useDeleteProjectMutation,
 } from '../../api/projectsApi';
 import type { ProjectItem } from '../../types/project.types';
+import { useAuth } from '../../hooks/useAuth';
 
 const projectSpecSchema = z.object({
   challenge: z.string().min(1, 'Challenge spec is required').trim(),
@@ -31,6 +32,9 @@ const projectSchema = z.object({
 type ProjectFormValues = z.infer<typeof projectSchema>;
 
 export default function ProjectForm() {
+  const { email } = useAuth();
+  const isGuest = email === 'guest@rahulbuilds.dev';
+
   const { data: projects = [], isLoading } = useGetProjectsQuery();
   const [createProject, { isLoading: isCreating }] = useCreateProjectMutation();
   const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
@@ -181,6 +185,13 @@ export default function ProjectForm() {
           {editingId ? <Edit2 size={12} className="text-burnt-orange" /> : <Plus size={12} className="text-burnt-orange" />}
           {editingId ? 'Edit Project Portfolio' : 'Add Project Portfolio'}
         </h3>
+        
+        {isGuest ? (
+          <div className="py-12 text-center text-[10px] uppercase font-bold tracking-widest text-secondary-gray font-sans border border-dashed border-border-cream rounded-xl">
+            Data modification disabled in Guest Access Mode
+          </div>
+        ) : (
+          <>
 
         {tagError && (
           <div className="mb-4 p-3 bg-red-500/5 border border-red-500/20 text-red-600 rounded-xl text-[10px] uppercase font-bold tracking-wider font-sans">
@@ -413,6 +424,8 @@ export default function ProjectForm() {
             )}
           </div>
         </form>
+        </>
+        )}
       </div>
 
       {/* Existing Projects Portfolio List */}
@@ -436,22 +449,24 @@ export default function ProjectForm() {
                     <p className="text-[9px] font-semibold text-burnt-orange uppercase mt-0.5 font-sans">{proj.category}</p>
                   </div>
 
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => handleEdit(proj)}
-                      className="p-1.5 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
-                      title="Edit Entry"
-                    >
-                      <Edit2 size={11} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(proj._id)}
-                      className="p-1.5 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
-                      title="Delete Entry"
-                    >
-                      <Trash2 size={11} />
-                    </button>
-                  </div>
+                  {!isGuest && (
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleEdit(proj)}
+                        className="p-1.5 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
+                        title="Edit Entry"
+                      >
+                        <Edit2 size={11} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(proj._id)}
+                        className="p-1.5 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
+                        title="Delete Entry"
+                      >
+                        <Trash2 size={11} />
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 <div className="text-[10px] text-secondary-gray leading-relaxed line-clamp-3 mb-4 font-sans">

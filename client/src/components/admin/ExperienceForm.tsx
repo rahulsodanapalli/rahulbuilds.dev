@@ -10,6 +10,7 @@ import {
   useDeleteExperienceMutation,
 } from '../../api/experienceApi';
 import type { ExperienceItem } from '../../types/experience.types';
+import { useAuth } from '../../hooks/useAuth';
 
 const experienceSchema = z.object({
   role: z.string().min(1, 'Role title is required').trim(),
@@ -21,6 +22,9 @@ const experienceSchema = z.object({
 type ExperienceFormValues = z.infer<typeof experienceSchema>;
 
 export default function ExperienceForm() {
+  const { email } = useAuth();
+  const isGuest = email === 'guest@rahulbuilds.dev';
+
   const { data: experiences = [], isLoading } = useGetExperiencesQuery();
   const [createExperience, { isLoading: isCreating }] = useCreateExperienceMutation();
   const [updateExperience, { isLoading: isUpdating }] = useUpdateExperienceMutation();
@@ -158,6 +162,12 @@ export default function ExperienceForm() {
           {editingId ? 'Edit Career Entry' : 'Add Career Entry'}
         </h3>
 
+        {isGuest ? (
+          <div className="py-12 text-center text-[10px] uppercase font-bold tracking-widest text-secondary-gray font-sans border border-dashed border-border-cream rounded-xl">
+            Data modification disabled in Guest Access Mode
+          </div>
+        ) : (
+          <>
         {listError && (
           <div className="mb-4 p-3 bg-red-500/5 border border-red-500/20 text-red-600 rounded-xl text-[10px] uppercase font-bold tracking-wider font-sans">
             {listError}
@@ -332,6 +342,8 @@ export default function ExperienceForm() {
             )}
           </div>
         </form>
+        </>
+        )}
       </div>
 
       {/* Existing Experiences Timeline Directory */}
@@ -356,22 +368,24 @@ export default function ExperienceForm() {
                     <p className="text-[10px] font-semibold text-burnt-orange uppercase mt-0.5 font-sans">{exp.company}</p>
                   </div>
 
-                  <div className="flex items-center gap-1">
-                    <button
-                      onClick={() => handleEdit(exp)}
-                      className="p-1.5 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
-                      title="Edit Entry"
-                    >
-                      <Edit2 size={11} />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(exp._id)}
-                      className="p-1.5 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
-                      title="Delete Entry"
-                    >
-                      <Trash2 size={11} />
-                    </button>
-                  </div>
+                  {!isGuest && (
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleEdit(exp)}
+                        className="p-1.5 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
+                        title="Edit Entry"
+                      >
+                        <Edit2 size={11} />
+                      </button>
+                      <button
+                        onClick={() => handleDelete(exp._id)}
+                        className="p-1.5 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
+                        title="Delete Entry"
+                      >
+                        <Trash2 size={11} />
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Sub Metadata */}

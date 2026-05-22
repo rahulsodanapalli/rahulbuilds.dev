@@ -1,22 +1,30 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { AchievementItem } from '../types/project.types';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+const API_URL =
+  import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 export const achievementsApi = createApi({
   reducerPath: 'achievementsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: API_URL,
+    baseUrl: `${API_URL}/api`,
     credentials: 'include',
   }),
   tagTypes: ['Achievements'],
+
   endpoints: (builder) => ({
     getAchievements: builder.query<AchievementItem[], void>({
       query: () => '/achievements',
-      transformResponse: (response: { success: boolean; data: AchievementItem[] }) => response.data,
+      transformResponse: (
+        response: {
+          success: boolean;
+          data: AchievementItem[];
+        }
+      ) => response.data,
       providesTags: ['Achievements'],
     }),
-    createAchievement: builder.mutation<AchievementItem, Partial<AchievementItem>>({
+
+    createAchievement: builder.mutation({
       query: (achievement) => ({
         url: '/achievements',
         method: 'POST',
@@ -24,7 +32,8 @@ export const achievementsApi = createApi({
       }),
       invalidatesTags: ['Achievements'],
     }),
-    updateAchievement: builder.mutation<AchievementItem, { id: string; achievement: Partial<AchievementItem> }>({
+
+    updateAchievement: builder.mutation({
       query: ({ id, achievement }) => ({
         url: `/achievements/${id}`,
         method: 'PUT',
@@ -32,7 +41,8 @@ export const achievementsApi = createApi({
       }),
       invalidatesTags: ['Achievements'],
     }),
-    deleteAchievement: builder.mutation<{ success: boolean }, string>({
+
+    deleteAchievement: builder.mutation({
       query: (id) => ({
         url: `/achievements/${id}`,
         method: 'DELETE',

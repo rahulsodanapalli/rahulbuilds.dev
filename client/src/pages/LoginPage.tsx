@@ -163,6 +163,21 @@ export default function LoginPage() {
             )}
           </button>
         </form>
+
+        {/* Guest Access Note */}
+        <div className="mt-8 pt-6 border-t border-border-cream/50">
+          <div className="bg-cream/50 rounded-2xl p-4 border border-border-cream/50 text-center">
+            <p className="text-[10px] uppercase font-bold tracking-widest text-secondary-gray mb-2">
+              Guest / Recruiter Access
+            </p>
+            <p className="text-xs text-deep-black font-sans mb-1">
+              <span className="text-secondary-gray">Email:</span> guest@rahulbuilds.dev
+            </p>
+            <p className="text-xs text-deep-black font-sans">
+              <span className="text-secondary-gray">Password:</span> guest
+            </p>
+          </div>
+        </div>
       </motion.div>
     </div>
   );

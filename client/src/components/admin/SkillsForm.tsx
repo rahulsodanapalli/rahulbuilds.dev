@@ -10,6 +10,7 @@ import {
   useDeleteSkillMutation,
 } from '../../api/skillsApi';
 import type { SkillItem } from '../../types/skill.types';
+import { useAuth } from '../../hooks/useAuth';
 
 const skillSchema = z.object({
   name: z.string().min(1, 'Skill name is required').trim(),
@@ -29,6 +30,9 @@ const DEFAULT_CATEGORIES = [
 ];
 
 export default function SkillsForm() {
+  const { email } = useAuth();
+  const isGuest = email === 'guest@rahulbuilds.dev';
+
   const { data: skills = [], isLoading } = useGetSkillsQuery();
   const [createSkill, { isLoading: isCreating }] = useCreateSkillMutation();
   const [updateSkill, { isLoading: isUpdating }] = useUpdateSkillMutation();
@@ -104,6 +108,12 @@ export default function SkillsForm() {
           {editingId ? 'Edit Skill Element' : 'Add Skill Element'}
         </h3>
 
+        {isGuest ? (
+          <div className="py-12 text-center text-[10px] uppercase font-bold tracking-widest text-secondary-gray font-sans border border-dashed border-border-cream rounded-xl">
+            Data modification disabled in Guest Access Mode
+          </div>
+        ) : (
+          <>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
           <div className="space-y-1">
@@ -174,6 +184,8 @@ export default function SkillsForm() {
             )}
           </div>
         </form>
+        </>
+        )}
       </div>
 
       {/* Right: Existing Skills Grid */}
@@ -210,22 +222,24 @@ export default function SkillsForm() {
                           )}
                         </div>
 
-                        <div className="flex items-center gap-1.5 border-l border-border-cream/80 pl-2">
-                          <button
-                            onClick={() => handleEdit(skill)}
-                            className="p-1 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200"
-                            title="Edit Skill"
-                          >
-                            <Edit2 size={12} />
-                          </button>
-                          <button
-                            onClick={() => handleDelete(skill._id)}
-                            className="p-1 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200"
-                            title="Delete Skill"
-                          >
-                            <Trash2 size={12} />
-                          </button>
-                        </div>
+                        {!isGuest && (
+                          <div className="flex items-center gap-1.5 border-l border-border-cream/80 pl-2">
+                            <button
+                              onClick={() => handleEdit(skill)}
+                              className="p-1 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200"
+                              title="Edit Skill"
+                            >
+                              <Edit2 size={12} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(skill._id)}
+                              className="p-1 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200"
+                              title="Delete Skill"
+                            >
+                              <Trash2 size={12} />
+                            </button>
+                          </div>
+                        )}
                       </div>
                     ))}
                   </div>

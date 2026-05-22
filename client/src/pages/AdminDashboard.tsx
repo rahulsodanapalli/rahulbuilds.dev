@@ -34,13 +34,14 @@ export default function AdminDashboard() {
   ];
 
   return (
-    <div className="min-h-screen w-full bg-cream text-deep-black py-15 px-6 md:px-12 select-none relative overflow-hidden bg-noise">
+    <div className="min-h-screen w-full bg-cream text-deep-black py-4 px-6 md:px-10 select-none relative overflow-hidden bg-noise">
       {/* Subtle border geometry */}
       <div className="absolute w-[600px] h-[600px] rounded-full border border-border-cream/30 pointer-events-none top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 z-0" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-10xl mx-auto relative z-10">
         {/* Header Dashboard Nav */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12 border-b border-border-cream pb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-4
+         border-b border-border-cream pb-8">
           <div>
             <div className="flex items-center gap-2 mb-2">
               <Shield size={16} className="text-burnt-orange" />
@@ -54,6 +55,12 @@ export default function AdminDashboard() {
             <p className="text-[9px] font-bold text-muted uppercase tracking-wider mt-1 flex items-center gap-1 font-sans">
               Logged in as: <span className="text-burnt-orange font-normal lowercase">{email}</span>
             </p>
+            {email === 'guest@rahulbuilds.dev' && (
+              <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 text-red-600 rounded-xl flex items-center gap-2 text-[10px] uppercase font-bold tracking-widest font-sans inline-flex">
+                <Shield size={14} className="text-red-500" />
+                Read-Only Guest Access Mode
+              </div>
+            )}
           </div>
 
           {/* Logout Button */}
@@ -72,7 +79,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Tab Controls Selector Grid */}
-        <div className="flex flex-wrap gap-2.5 mb-10 pb-2 overflow-x-auto">
+        <div className="flex flex-wrap gap-2.5 mb-2 pb-2 overflow-x-auto">
           {tabs.map((tab) => {
             const isSelected = activeTab === tab.id;
             return (

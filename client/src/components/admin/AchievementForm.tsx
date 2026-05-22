@@ -10,6 +10,7 @@ import {
   useDeleteAchievementMutation,
 } from '../../api/achievementsApi';
 import type { AchievementItem } from '../../types/project.types';
+import { useAuth } from '../../hooks/useAuth';
 
 const achievementSchema = z.object({
   title: z.string().min(1, 'Achievement title is required').trim(),
@@ -20,6 +21,9 @@ const achievementSchema = z.object({
 type AchievementFormValues = z.infer<typeof achievementSchema>;
 
 export default function AchievementForm() {
+  const { email } = useAuth();
+  const isGuest = email === 'guest@rahulbuilds.dev';
+
   const { data: achievements = [], isLoading } = useGetAchievementsQuery();
   const [createAchievement, { isLoading: isCreating }] = useCreateAchievementMutation();
   const [updateAchievement, { isLoading: isUpdating }] = useUpdateAchievementMutation();
@@ -95,6 +99,12 @@ export default function AchievementForm() {
           {editingId ? 'Edit Achievement' : 'Add Achievement'}
         </h3>
 
+        {isGuest ? (
+          <div className="py-12 text-center text-[10px] uppercase font-bold tracking-widest text-secondary-gray font-sans border border-dashed border-border-cream rounded-xl">
+            Data modification disabled in Guest Access Mode
+          </div>
+        ) : (
+          <>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Title */}
           <div className="space-y-1">
@@ -162,6 +172,8 @@ export default function AchievementForm() {
             )}
           </div>
         </form>
+        </>
+        )}
       </div>
 
       {/* Right: Existing Achievements Grid */}
@@ -193,22 +205,24 @@ export default function AchievementForm() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-1 shrink-0">
-                  <button
-                    onClick={() => handleEdit(ach)}
-                    className="p-1.5 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
-                    title="Edit Entry"
-                  >
-                    <Edit2 size={11} />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(ach._id)}
-                    className="p-1.5 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
-                    title="Delete Entry"
-                  >
-                    <Trash2 size={11} />
-                  </button>
-                </div>
+                {!isGuest && (
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      onClick={() => handleEdit(ach)}
+                      className="p-1.5 hover:text-burnt-orange text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
+                      title="Edit Entry"
+                    >
+                      <Edit2 size={11} />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(ach._id)}
+                      className="p-1.5 hover:text-red-600 text-secondary-gray/50 transition-colors duration-200 bg-card-white border border-border-cream rounded-lg"
+                      title="Delete Entry"
+                    >
+                      <Trash2 size={11} />
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

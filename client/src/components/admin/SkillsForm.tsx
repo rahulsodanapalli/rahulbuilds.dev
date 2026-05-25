@@ -11,7 +11,13 @@ import {
 } from '../../api/skillsApi';
 import type { SkillItem } from '../../types/skill.types';
 import { useAuth } from '../../hooks/useAuth';
-import { confirmDeleteAlert } from '../../utils/alert';
+import { 
+  confirmDeleteAlert, 
+  showLoadingAlert, 
+  showSuccessToast, 
+  showErrorToast 
+} from '../../utils/alert';
+import Swal from 'sweetalert2';
 
 const skillSchema = z.object({
   name: z.string().min(1, 'Skill name is required').trim(),
@@ -61,12 +67,15 @@ export default function SkillsForm() {
       if (editingId) {
         await updateSkill({ id: editingId, skill: values }).unwrap();
         setEditingId(null);
+        showSuccessToast('Skill updated successfully!');
       } else {
         await createSkill(values).unwrap();
+        showSuccessToast('Skill created successfully!');
       }
       reset({ name: '', category: 'Frontend Core', level: 'Expert' });
     } catch (err) {
       console.error('Failed to save skill:', err);
+      showErrorToast('Failed to save skill.');
     }
   };
 
@@ -88,10 +97,15 @@ export default function SkillsForm() {
       'Are you sure you want to permanently delete this skill from your armament?'
     );
     if (result.isConfirmed) {
+      showLoadingAlert('Deleting skill...');
       try {
         await deleteSkill(id).unwrap();
+        Swal.close();
+        showSuccessToast('Skill deleted successfully!');
       } catch (err) {
+        Swal.close();
         console.error('Failed to delete skill:', err);
+        showErrorToast('Failed to delete skill.');
       }
     }
   };
@@ -202,7 +216,7 @@ export default function SkillsForm() {
         {skills.length === 0 ? (
           <p className="text-[10px] text-muted text-center py-12 font-sans">No skills registered yet.</p>
         ) : (
-          <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2">
+          <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2" data-lenis-prevent="true">
             {DEFAULT_CATEGORIES.map((category) => {
               const catSkills = skills.filter((s: SkillItem) => s.category === category);
               if (catSkills.length === 0) return null;

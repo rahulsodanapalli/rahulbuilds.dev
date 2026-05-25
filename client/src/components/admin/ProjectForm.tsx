@@ -11,7 +11,13 @@ import {
 } from '../../api/projectsApi';
 import type { ProjectItem } from '../../types/project.types';
 import { useAuth } from '../../hooks/useAuth';
-import { confirmDeleteAlert } from '../../utils/alert';
+import { 
+  confirmDeleteAlert,
+  showLoadingAlert,
+  showSuccessToast,
+  showErrorToast
+} from '../../utils/alert';
+import Swal from 'sweetalert2';
 
 const projectSpecSchema = z.object({
   challenge: z.string().min(1, 'Challenge spec is required').trim(),
@@ -99,12 +105,15 @@ export default function ProjectForm() {
       if (editingId) {
         await updateProject({ id: editingId, project: payload }).unwrap();
         setEditingId(null);
+        showSuccessToast('Project updated successfully!');
       } else {
         await createProject(payload).unwrap();
+        showSuccessToast('Project created successfully!');
       }
       resetForm();
     } catch (err) {
       console.error('Failed to save project:', err);
+      showErrorToast('Failed to save project.');
     }
   };
 
@@ -151,10 +160,15 @@ export default function ProjectForm() {
       'Are you sure you want to permanently delete this project from your portfolio?'
     );
     if (result.isConfirmed) {
+      showLoadingAlert('Deleting project...');
       try {
         await deleteProject(id).unwrap();
+        Swal.close();
+        showSuccessToast('Project deleted successfully!');
       } catch (err) {
+        Swal.close();
         console.error('Failed to delete project:', err);
+        showErrorToast('Failed to delete project.');
       }
     }
   };
@@ -442,7 +456,7 @@ export default function ProjectForm() {
         {projects.length === 0 ? (
           <p className="text-[10px] text-muted text-center py-12 font-sans">No project entries registered yet.</p>
         ) : (
-          <div className="space-y-4 max-h-[820px] overflow-y-auto pr-2">
+          <div className="space-y-4 max-h-[820px] overflow-y-auto pr-2" data-lenis-prevent="true">
             {projects.map((proj: ProjectItem) => (
               <div
                 key={proj._id}

@@ -11,7 +11,13 @@ import {
 } from '../../api/achievementsApi';
 import type { AchievementItem } from '../../types/project.types';
 import { useAuth } from '../../hooks/useAuth';
-import { confirmDeleteAlert } from '../../utils/alert';
+import { 
+  confirmDeleteAlert,
+  showLoadingAlert,
+  showSuccessToast,
+  showErrorToast
+} from '../../utils/alert';
+import Swal from 'sweetalert2';
 
 const achievementSchema = z.object({
   title: z.string().min(1, 'Achievement title is required').trim(),
@@ -52,12 +58,15 @@ export default function AchievementForm() {
       if (editingId) {
         await updateAchievement({ id: editingId, achievement: values }).unwrap();
         setEditingId(null);
+        showSuccessToast('Achievement updated successfully!');
       } else {
         await createAchievement(values).unwrap();
+        showSuccessToast('Achievement created successfully!');
       }
       reset({ title: '', desc: '', date: '' });
     } catch (err) {
       console.error('Failed to save achievement:', err);
+      showErrorToast('Failed to save achievement.');
     }
   };
 
@@ -79,10 +88,15 @@ export default function AchievementForm() {
       'Are you sure you want to permanently delete this achievement milestone?'
     );
     if (result.isConfirmed) {
+      showLoadingAlert('Deleting achievement...');
       try {
         await deleteAchievement(id).unwrap();
+        Swal.close();
+        showSuccessToast('Achievement deleted successfully!');
       } catch (err) {
+        Swal.close();
         console.error('Failed to delete achievement:', err);
+        showErrorToast('Failed to delete achievement.');
       }
     }
   };
@@ -190,7 +204,7 @@ export default function AchievementForm() {
         {achievements.length === 0 ? (
           <p className="text-[10px] text-muted text-center py-12 font-sans">No achievements registered yet.</p>
         ) : (
-          <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+          <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2" data-lenis-prevent="true">
             {achievements.map((ach: AchievementItem) => (
               <div
                 key={ach._id}

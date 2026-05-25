@@ -11,7 +11,13 @@ import {
 } from '../../api/experienceApi';
 import type { ExperienceItem } from '../../types/experience.types';
 import { useAuth } from '../../hooks/useAuth';
-import { confirmDeleteAlert } from '../../utils/alert';
+import { 
+  confirmDeleteAlert,
+  showLoadingAlert,
+  showSuccessToast,
+  showErrorToast
+} from '../../utils/alert';
+import Swal from 'sweetalert2';
 
 const experienceSchema = z.object({
   role: z.string().min(1, 'Role title is required').trim(),
@@ -78,12 +84,15 @@ export default function ExperienceForm() {
       if (editingId) {
         await updateExperience({ id: editingId, exp: payload }).unwrap();
         setEditingId(null);
+        showSuccessToast('Experience updated successfully!');
       } else {
         await createExperience(payload).unwrap();
+        showSuccessToast('Experience created successfully!');
       }
       resetForm();
     } catch (err) {
       console.error('Failed to save experience:', err);
+      showErrorToast('Failed to save experience.');
     }
   };
 
@@ -114,10 +123,15 @@ export default function ExperienceForm() {
       'Are you sure you want to permanently delete this experience entry from your timeline?'
     );
     if (result.isConfirmed) {
+      showLoadingAlert('Deleting experience...');
       try {
         await deleteExperience(id).unwrap();
+        Swal.close();
+        showSuccessToast('Experience deleted successfully!');
       } catch (err) {
+        Swal.close();
         console.error('Failed to delete experience:', err);
+        showErrorToast('Failed to delete experience.');
       }
     }
   };
@@ -360,7 +374,7 @@ export default function ExperienceForm() {
         {experiences.length === 0 ? (
           <p className="text-[10px] text-muted text-center py-12 font-sans">No timeline items registered yet.</p>
         ) : (
-          <div className="space-y-4 max-h-[660px] overflow-y-auto pr-2">
+          <div className="space-y-4 max-h-[660px] overflow-y-auto pr-2" data-lenis-prevent="true">
             {experiences.map((exp: ExperienceItem) => (
               <div
                 key={exp._id}

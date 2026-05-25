@@ -22,3 +22,69 @@ export const confirmDeleteAlert = (title: string, text: string) => {
     buttonsStyling: true,
   });
 };
+
+export const showLoadingAlert = (title: string = 'Processing...') => {
+  return Swal.fire({
+    title,
+    allowOutsideClick: false,
+    background: '#FFFFFF',
+    color: '#111111',
+    customClass: {
+      popup: 'rounded-3xl border border-border-cream font-sans shadow-minimal p-6',
+      title: 'text-xs uppercase font-bold tracking-widest text-deep-black block text-center',
+    },
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+};
+
+export const showSuccessToast = (message: string) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
+    background: '#FFFFFF',
+    color: '#111111',
+    customClass: {
+      popup: 'rounded-xl border border-border-cream font-sans shadow-minimal p-4',
+      title: 'text-xs font-semibold text-deep-black',
+    },
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
+
+  return Toast.fire({
+    icon: 'success',
+    title: message
+  });
+};
+
+export const showErrorToast = (message: string) => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    background: '#FFFFFF',
+    color: '#111111',
+    customClass: {
+      popup: 'rounded-xl border border-border-cream font-sans shadow-minimal p-4',
+      title: 'text-xs font-semibold text-deep-black',
+    },
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
+
+  return Toast.fire({
+    icon: 'error',
+    title: message
+  });
+};

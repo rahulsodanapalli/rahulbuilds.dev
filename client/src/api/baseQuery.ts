@@ -8,15 +8,11 @@ export const createBaseQuery = () =>
     baseUrl: `${API_URL}/api`,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
-      // Prevent caching to avoid 304 Not Modified
-      headers.set('Cache-Control', 'no-cache, no-store, must-revalidate');
-      headers.set('Pragma', 'no-cache');
-      headers.set('Expires', '0');
-
       const token = (getState() as RootState).auth.token;
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }
       return headers;
     },
+    fetchFn: (input, init) => fetch(input, { ...init, cache: 'no-store' }),
   });

@@ -71,7 +71,7 @@ export default function SkillsForm() {
   };
 
   const handleEdit = (skill: SkillItem) => {
-    setEditingId(skill);
+    setEditingId(skill._id);
     setValue('name', skill.name);
     setValue('category', skill.category);
     setValue('level', skill.level || 'Expert');

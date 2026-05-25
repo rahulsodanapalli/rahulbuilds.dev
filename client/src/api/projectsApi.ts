@@ -20,7 +20,7 @@ export const projectsApi = createApi({
       }),
       invalidatesTags: ['Projects'],
     }),
-    updateProject: builder.mutation<ProjectItem, { id: string | number; project: Partial<ProjectItem> }>({
+    updateProject: builder.mutation<ProjectItem, { id: string; project: Partial<ProjectItem> }>({
       query: ({ id, project }) => ({
         url: `/projects/${id}`,
         method: 'PUT',
@@ -28,7 +28,7 @@ export const projectsApi = createApi({
       }),
       invalidatesTags: ['Projects'],
     }),
-    deleteProject: builder.mutation<{ success: boolean }, string | number>({
+    deleteProject: builder.mutation<{ success: boolean }, string>({
       query: (id) => ({
         url: `/projects/${id}`,
         method: 'DELETE',

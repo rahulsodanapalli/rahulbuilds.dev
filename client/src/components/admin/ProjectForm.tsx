@@ -41,7 +41,7 @@ export default function ProjectForm() {
   const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
   const [deleteProject] = useDeleteProjectMutation();
 
-  const [editingId, setEditingId] = useState<string | number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   // Specifications Tech tag list state
   const [techList, setTechList] = useState<string[]>([]);
@@ -145,7 +145,7 @@ export default function ProjectForm() {
     setTagError(null);
   };
 
-  const handleDelete = async (id: string | number) => {
+  const handleDelete = async (id: string) => {
     const result = await confirmDeleteAlert(
       'Delete Project Spec',
       'Are you sure you want to permanently delete this project from your portfolio?'

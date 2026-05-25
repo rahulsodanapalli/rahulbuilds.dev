@@ -11,6 +11,7 @@ import {
 } from '../../api/skillsApi';
 import type { SkillItem } from '../../types/skill.types';
 import { useAuth } from '../../hooks/useAuth';
+import { confirmDeleteAlert } from '../../utils/alert';
 
 const skillSchema = z.object({
   name: z.string().min(1, 'Skill name is required').trim(),
@@ -70,7 +71,7 @@ export default function SkillsForm() {
   };
 
   const handleEdit = (skill: SkillItem) => {
-    setEditingId(skill._id);
+    setEditingId(skill);
     setValue('name', skill.name);
     setValue('category', skill.category);
     setValue('level', skill.level || 'Expert');
@@ -82,7 +83,11 @@ export default function SkillsForm() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this skill?')) {
+    const result = await confirmDeleteAlert(
+      'Delete Skill Element',
+      'Are you sure you want to permanently delete this skill from your armament?'
+    );
+    if (result.isConfirmed) {
       try {
         await deleteSkill(id).unwrap();
       } catch (err) {
@@ -114,77 +119,77 @@ export default function SkillsForm() {
           </div>
         ) : (
           <>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          {/* Name */}
-          <div className="space-y-1">
-            <label className="text-[9px] uppercase font-bold tracking-widest text-secondary-gray block font-sans">Skill Name</label>
-            <input
-              {...register('name')}
-              type="text"
-              placeholder="e.g. Next.js, Redux"
-              className="w-full px-4 py-3 bg-cream/30 border border-border-cream rounded-xl text-xs text-deep-black placeholder-secondary-gray/40 focus:outline-none focus:border-burnt-orange font-sans transition-all duration-300"
-            />
-            {errors.name && <p className="text-[9px] text-burnt-orange font-medium">{errors.name.message}</p>}
-          </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              {/* Name */}
+              <div className="space-y-1">
+                <label className="text-[9px] uppercase font-bold tracking-widest text-secondary-gray block font-sans">Skill Name</label>
+                <input
+                  {...register('name')}
+                  type="text"
+                  placeholder="e.g. Next.js, Redux"
+                  className="w-full px-4 py-3 bg-cream/30 border border-border-cream rounded-xl text-xs text-deep-black placeholder-secondary-gray/40 focus:outline-none focus:border-burnt-orange font-sans transition-all duration-300"
+                />
+                {errors.name && <p className="text-[9px] text-burnt-orange font-medium">{errors.name.message}</p>}
+              </div>
 
-          {/* Category */}
-          <div className="space-y-1">
-            <label className="text-[9px] uppercase font-bold tracking-widest text-secondary-gray block font-sans">Category</label>
-            <select
-              {...register('category')}
-              className="w-full px-4 py-3 bg-cream/30 border border-border-cream rounded-xl text-xs text-deep-black focus:outline-none focus:border-burnt-orange font-sans transition-all duration-300"
-            >
-              {DEFAULT_CATEGORIES.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-          </div>
+              {/* Category */}
+              <div className="space-y-1">
+                <label className="text-[9px] uppercase font-bold tracking-widest text-secondary-gray block font-sans">Category</label>
+                <select
+                  {...register('category')}
+                  className="w-full px-4 py-3 bg-cream/30 border border-border-cream rounded-xl text-xs text-deep-black focus:outline-none focus:border-burnt-orange font-sans transition-all duration-300"
+                >
+                  {DEFAULT_CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-          {/* Proficiency Level */}
-          <div className="space-y-1">
-            <label className="text-[9px] uppercase font-bold tracking-widest text-secondary-gray block font-sans">Level (Optional)</label>
-            <input
-              {...register('level')}
-              type="text"
-              placeholder="e.g. Expert, Intermediate"
-              className="w-full px-4 py-3 bg-cream/30 border border-border-cream rounded-xl text-xs text-deep-black placeholder-secondary-gray/40 focus:outline-none focus:border-burnt-orange font-sans transition-all duration-300"
-            />
-          </div>
+              {/* Proficiency Level */}
+              <div className="space-y-1">
+                <label className="text-[9px] uppercase font-bold tracking-widest text-secondary-gray block font-sans">Level (Optional)</label>
+                <input
+                  {...register('level')}
+                  type="text"
+                  placeholder="e.g. Expert, Intermediate"
+                  className="w-full px-4 py-3 bg-cream/30 border border-border-cream rounded-xl text-xs text-deep-black placeholder-secondary-gray/40 focus:outline-none focus:border-burnt-orange font-sans transition-all duration-300"
+                />
+              </div>
 
-          {/* Buttons */}
-          <div className="flex items-center gap-3 mt-6">
-            <button
-              type="submit"
-              disabled={isCreating || isUpdating}
-              className="flex-1 py-3 bg-deep-black text-cream hover:bg-burnt-orange font-semibold uppercase tracking-widest text-[10px] rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-minimal interactive font-sans font-bold"
-            >
-              {isCreating || isUpdating ? (
-                <Loader2 size={12} className="animate-spin text-cream" />
-              ) : editingId ? (
-                <>
-                  <Check size={12} className="text-cream" /> Save Updates
-                </>
-              ) : (
-                <>
-                  <Plus size={12} className="text-cream" /> Create Skill
-                </>
-              )}
-            </button>
+              {/* Buttons */}
+              <div className="flex items-center gap-3 mt-6">
+                <button
+                  type="submit"
+                  disabled={isCreating || isUpdating}
+                  className="flex-1 py-3 bg-deep-black text-cream hover:bg-burnt-orange font-semibold uppercase tracking-widest text-[10px] rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-minimal interactive font-sans font-bold"
+                >
+                  {isCreating || isUpdating ? (
+                    <Loader2 size={12} className="animate-spin text-cream" />
+                  ) : editingId ? (
+                    <>
+                      <Check size={12} className="text-cream" /> Save Updates
+                    </>
+                  ) : (
+                    <>
+                      <Plus size={12} className="text-cream" /> Create Skill
+                    </>
+                  )}
+                </button>
 
-            {editingId && (
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="px-4 py-3 border border-border-cream text-secondary-gray hover:text-deep-black hover:bg-cream bg-card-white font-semibold uppercase tracking-widest text-[10px] rounded-xl flex items-center gap-1 transition-all duration-300 interactive font-sans font-bold"
-              >
-                <X size={12} /> Cancel
-              </button>
-            )}
-          </div>
-        </form>
-        </>
+                {editingId && (
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="px-4 py-3 border border-border-cream text-secondary-gray hover:text-deep-black hover:bg-cream bg-card-white font-semibold uppercase tracking-widest text-[10px] rounded-xl flex items-center gap-1 transition-all duration-300 interactive font-sans font-bold"
+                  >
+                    <X size={12} /> Cancel
+                  </button>
+                )}
+              </div>
+            </form>
+          </>
         )}
       </div>
 

@@ -30,6 +30,7 @@
     "react-hook-form": "^7.76.0",
     "react-redux": "^9.1.1",
     "react-router-dom": "^7.15.1",
+    "sweetalert2": "^11.26.24",
     "tailwindcss": "^4.3.0",
     "three": "^0.184.0",
     "zod": "^3.23.4",

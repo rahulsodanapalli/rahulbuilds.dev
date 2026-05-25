@@ -13,7 +13,6 @@ const NAV_LINKS = [
   { id: 'achievements', label: 'Honors' },
   { id: 'tech', label: 'Stack' },
   { id: 'mindset', label: 'Mindset' },
-  { id: 'code', label: 'Terminal' },
   { id: 'contact', label: 'Contact' },
 ];
 
@@ -33,7 +32,7 @@ export default function Navbar() {
   const handleNavClick = (id: string) => {
     setIsMobileMenuOpen(false);
     setActiveSection(id);
-    
+
     const lenis = (window as any).lenis;
     const targetElement = document.getElementById(id);
     if (lenis && targetElement) {
@@ -45,16 +44,15 @@ export default function Navbar() {
 
   return (
     <>
-      <header 
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 w-full ${
-          isScrolled 
-            ? 'py-3.5 bg-cream/70 backdrop-blur-md border-b border-border-cream/80 shadow-minimal' 
-            : 'py-6 bg-transparent border-b border-transparent'
-        }`}
+      <header
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 w-full ${isScrolled
+          ? 'py-3.5 bg-cream/70 backdrop-blur-md border-b border-border-cream/80 shadow-minimal'
+          : 'py-6 bg-transparent border-b border-transparent'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Minimal Luxury Logo */}
-          <motion.button 
+          <motion.button
             onClick={() => handleNavClick('hero')}
             className="text-base font-bold tracking-tight text-deep-black flex items-center gap-1 focus:outline-none interactive"
             initial={{ opacity: 0, y: -10 }}
@@ -74,9 +72,8 @@ export default function Navbar() {
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`relative px-4 py-2 text-[9px] font-display font-bold uppercase tracking-widest transition-colors duration-300 rounded-full focus:outline-none interactive ${
-                    isActive ? 'text-burnt-orange' : 'text-secondary-gray/70 hover:text-deep-black'
-                  }`}
+                  className={`relative px-4 py-2 text-[9px] font-display font-bold uppercase tracking-widest transition-colors duration-300 rounded-full focus:outline-none interactive ${isActive ? 'text-burnt-orange' : 'text-secondary-gray/70 hover:text-deep-black'
+                    }`}
                 >
                   {isActive && (
                     <motion.span
@@ -101,9 +98,9 @@ export default function Navbar() {
               <Terminal size={10} className="text-burnt-orange" />
               Admin
             </Link>
-            
+
             <MagneticButton>
-              <button 
+              <button
                 onClick={() => handleNavClick('contact')}
                 className="px-5 py-2 text-[9px] font-display font-bold uppercase tracking-widest text-white bg-deep-black hover:bg-burnt-orange transition-all duration-300 rounded-full shadow-minimal interactive"
               >
@@ -143,15 +140,14 @@ export default function Navbar() {
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: idx * 0.04, duration: 0.3 }}
-                    className={`text-lg font-display font-bold tracking-widest uppercase transition-colors interactive ${
-                      isActive ? 'text-burnt-orange font-serif italic' : 'text-secondary-gray/70'
-                    }`}
+                    className={`text-lg font-display font-bold tracking-widest uppercase transition-colors interactive ${isActive ? 'text-burnt-orange font-serif italic' : 'text-secondary-gray/70'
+                      }`}
                   >
                     {link.label}
                   </motion.button>
                 );
               })}
-              
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -164,7 +160,7 @@ export default function Navbar() {
                 >
                   Initiate Discussion
                 </button>
-                
+
                 <Link
                   to="/admin"
                   onClick={() => setIsMobileMenuOpen(false)}

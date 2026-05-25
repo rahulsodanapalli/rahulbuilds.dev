@@ -200,8 +200,8 @@ export default function CodeShowcase() {
                   key={tab.name}
                   onClick={() => handleTabClick(idx)}
                   className={`px-4 py-2 rounded-lg text-[10px] font-mono tracking-wider transition-all duration-300 border focus:outline-none flex items-center gap-2 ${isSelected
-                      ? 'bg-deep-black text-cream border-deep-black font-semibold'
-                      : 'bg-card-white text-secondary-gray border-border-cream/80 hover:text-burnt-orange'
+                    ? 'bg-deep-black text-cream border-deep-black font-semibold'
+                    : 'bg-card-white text-secondary-gray border-border-cream/80 hover:text-burnt-orange'
                     }`}
                 >
                   <span className={`w-1.5 h-1.5 rounded-full block ${isSelected ? 'bg-burnt-orange animate-pulse' : 'bg-secondary-gray/20'}`} />

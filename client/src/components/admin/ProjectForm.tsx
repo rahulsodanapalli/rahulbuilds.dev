@@ -11,6 +11,7 @@ import {
 } from '../../api/projectsApi';
 import type { ProjectItem } from '../../types/project.types';
 import { useAuth } from '../../hooks/useAuth';
+import { confirmDeleteAlert } from '../../utils/alert';
 
 const projectSpecSchema = z.object({
   challenge: z.string().min(1, 'Challenge spec is required').trim(),
@@ -40,7 +41,7 @@ export default function ProjectForm() {
   const [updateProject, { isLoading: isUpdating }] = useUpdateProjectMutation();
   const [deleteProject] = useDeleteProjectMutation();
 
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | number | null>(null);
 
   // Specifications Tech tag list state
   const [techList, setTechList] = useState<string[]>([]);
@@ -144,8 +145,12 @@ export default function ProjectForm() {
     setTagError(null);
   };
 
-  const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this project?')) {
+  const handleDelete = async (id: string | number) => {
+    const result = await confirmDeleteAlert(
+      'Delete Project Spec',
+      'Are you sure you want to permanently delete this project from your portfolio?'
+    );
+    if (result.isConfirmed) {
       try {
         await deleteProject(id).unwrap();
       } catch (err) {

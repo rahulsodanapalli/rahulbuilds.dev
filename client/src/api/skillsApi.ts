@@ -1,14 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import type { SkillItem } from '../types/skill.types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+import { createBaseQuery } from './baseQuery';
 
 export const skillsApi = createApi({
   reducerPath: 'skillsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_URL}/api`,
-    credentials: 'include',
-  }),
+  baseQuery: createBaseQuery(),
   tagTypes: ['Skills'],
   endpoints: (builder) => ({
     getSkills: builder.query<SkillItem[], void>({

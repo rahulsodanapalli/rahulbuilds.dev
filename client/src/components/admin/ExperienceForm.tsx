@@ -11,6 +11,7 @@ import {
 } from '../../api/experienceApi';
 import type { ExperienceItem } from '../../types/experience.types';
 import { useAuth } from '../../hooks/useAuth';
+import { confirmDeleteAlert } from '../../utils/alert';
 
 const experienceSchema = z.object({
   role: z.string().min(1, 'Role title is required').trim(),
@@ -108,7 +109,11 @@ export default function ExperienceForm() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this experience entry?')) {
+    const result = await confirmDeleteAlert(
+      'Delete Career Entry',
+      'Are you sure you want to permanently delete this experience entry from your timeline?'
+    );
+    if (result.isConfirmed) {
       try {
         await deleteExperience(id).unwrap();
       } catch (err) {

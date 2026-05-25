@@ -8,7 +8,7 @@ export interface ProjectSpec {
 }
 
 export interface ProjectItem {
-  _id: string;
+  _id: string | number;
   title: string;
   subtitle: string;
   category: string;
@@ -19,7 +19,7 @@ export interface ProjectItem {
   updatedAt?: string;
 }
 export interface AchievementItem {
-  _id: string;
+  _id: string | number;
   title: string;
   desc: string;
   date?: string;

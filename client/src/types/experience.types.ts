@@ -1,5 +1,5 @@
 export interface ExperienceItem {
-  _id: string;
+  _id: string | number;
   role: string;
   company: string;
   location: string;

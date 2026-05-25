@@ -1,5 +1,5 @@
 export interface SkillItem {
-  _id: string;
+  _id: string | number;
   name: string;
   category: string;
   level?: string;

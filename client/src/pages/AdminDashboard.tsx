@@ -67,7 +67,7 @@ export default function AdminDashboard() {
           <button
             onClick={handleLogout}
             disabled={loading}
-            className="px-6 py-3.5 border border-red-200 bg-card-white hover:border-red-500 hover:bg-red-50/50 text-red-600 font-semibold uppercase tracking-widest text-[10px] rounded-2xl flex items-center gap-2 transition-all duration-300 interactive shadow-minimal font-sans"
+            className="px-2 py-3.5 border border-red-200 bg-card-white hover:border-red-500 hover:bg-red-50/50 text-red-600 font-semibold uppercase tracking-widest text-[10px] rounded-2xl flex items-center gap-2 transition-all duration-300 interactive shadow-minimal font-sans"
           >
             {loading ? (
               <Loader2 size={12} className="animate-spin" />

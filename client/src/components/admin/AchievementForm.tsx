@@ -11,6 +11,7 @@ import {
 } from '../../api/achievementsApi';
 import type { AchievementItem } from '../../types/project.types';
 import { useAuth } from '../../hooks/useAuth';
+import { confirmDeleteAlert } from '../../utils/alert';
 
 const achievementSchema = z.object({
   title: z.string().min(1, 'Achievement title is required').trim(),
@@ -29,7 +30,7 @@ export default function AchievementForm() {
   const [updateAchievement, { isLoading: isUpdating }] = useUpdateAchievementMutation();
   const [deleteAchievement] = useDeleteAchievementMutation();
 
-  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editingId, setEditingId] = useState<string | number | null>(null);
 
   const {
     register,
@@ -72,8 +73,12 @@ export default function AchievementForm() {
     reset({ title: '', desc: '', date: '' });
   };
 
-  const handleDelete = async (id: string) => {
-    if (confirm('Are you sure you want to delete this achievement?')) {
+  const handleDelete = async (id: string | number) => {
+    const result = await confirmDeleteAlert(
+      'Delete Achievement',
+      'Are you sure you want to permanently delete this achievement milestone?'
+    );
+    if (result.isConfirmed) {
       try {
         await deleteAchievement(id).unwrap();
       } catch (err) {

@@ -1,14 +1,10 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi } from '@reduxjs/toolkit/query/react';
 import type { ProjectItem } from '../types/project.types';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+import { createBaseQuery } from './baseQuery';
 
 export const projectsApi = createApi({
   reducerPath: 'projectsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: `${API_URL}/api`,
-    credentials: 'include',
-  }),
+  baseQuery: createBaseQuery(),
   tagTypes: ['Projects'],
   endpoints: (builder) => ({
     getProjects: builder.query<ProjectItem[], void>({
@@ -24,7 +20,7 @@ export const projectsApi = createApi({
       }),
       invalidatesTags: ['Projects'],
     }),
-    updateProject: builder.mutation<ProjectItem, { id: string; project: Partial<ProjectItem> }>({
+    updateProject: builder.mutation<ProjectItem, { id: string | number; project: Partial<ProjectItem> }>({
       query: ({ id, project }) => ({
         url: `/projects/${id}`,
         method: 'PUT',
@@ -32,7 +28,7 @@ export const projectsApi = createApi({
       }),
       invalidatesTags: ['Projects'],
     }),
-    deleteProject: builder.mutation<{ success: boolean }, string>({
+    deleteProject: builder.mutation<{ success: boolean }, string | number>({
       query: (id) => ({
         url: `/projects/${id}`,
         method: 'DELETE',

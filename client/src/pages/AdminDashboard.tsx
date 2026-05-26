@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Layers, Briefcase, Award, FolderOpen, LogOut, Loader2, Mail } from 'lucide-react';
+import { Shield, Layers, Briefcase, Award, FolderOpen,Loader2, Mail } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 // Admin forms imports
@@ -10,6 +10,8 @@ import ExperienceForm from '../components/admin/ExperienceForm';
 import ProjectForm from '../components/admin/ProjectForm';
 import AchievementForm from '../components/admin/AchievementForm';
 import MessagesForm from '../components/admin/MessagesForm';
+import { IoMdLogOut } from 'react-icons/io';
+
 
 type DashboardTab = 'projects' | 'experience' | 'skills' | 'achievements' | 'messages';
 
@@ -69,14 +71,14 @@ export default function AdminDashboard() {
           <button
             onClick={handleLogout}
             disabled={loading}
-            className="px-2 py-3.5 border border-red-200 bg-card-white hover:border-red-500 hover:bg-red-50/50 text-red-600 font-semibold uppercase tracking-widest text-[10px] rounded-2xl flex items-center gap-2 transition-all duration-300 interactive shadow-minimal font-sans"
+            className="px-2 py-2 border border-red-200 bg-card-white hover:border-red-500 hover:bg-red-50/50 text-red-600 font-bold uppercase tracking-widest text-[9px] rounded-full flex items-center gap-2 transition-all duration-300 interactive shadow-minimal font-sans"
           >
             {loading ? (
               <Loader2 size={12} className="animate-spin" />
             ) : (
-              <LogOut size={12} />
+              <IoMdLogOut size={13} className="text-red-500" />
             )}
-            Term Session
+            Log Out
           </button>
         </div>
 

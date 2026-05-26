@@ -8,7 +8,7 @@ const Experience = React.lazy(() => import('../sections/Experience'));
 const FeaturedProjects = React.lazy(() => import('../sections/FeaturedProjects'));
 const TechStack = React.lazy(() => import('../sections/TechStack'));
 const Mindset = React.lazy(() => import('../sections/Mindset'));
-const CodeShowcase = React.lazy(() => import('../sections/CodeShowcase'));
+
 const Contact = React.lazy(() => import('../sections/Contact'));
 const Footer = React.lazy(() => import('../components/layout/Footer'));
 const AchievementsSection = React.lazy(() => import('../sections/AchievementsSection'));
@@ -34,7 +34,7 @@ export default function Home() {
   const { setActiveSection } = useStore();
 
   useEffect(() => {
-    const sections = ['hero', 'about', 'experience', 'projects', 'achievements', 'tech', 'mindset', 'code', 'contact'];
+    const sections = ['hero', 'about', 'experience', 'projects', 'achievements', 'tech', 'mindset', 'contact'];
     
     // Core scroll watcher using zero-overhead IntersectionObserver
     const observerOptions = {
@@ -97,9 +97,6 @@ export default function Home() {
         <Mindset />
       </Suspense>
 
-      <Suspense fallback={<SectionSkeleton height="min-h-screen" />}>
-        <CodeShowcase />
-      </Suspense>
 
       <Suspense fallback={<SectionSkeleton height="min-h-screen" />}>
         <Contact />

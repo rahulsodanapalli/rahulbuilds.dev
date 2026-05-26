@@ -8,7 +8,7 @@ import {
   useCreateAchievementMutation,
   useUpdateAchievementMutation,
   useDeleteAchievementMutation,
-} from '../../api/achievementsApi';
+} from '../../services/api/achievementsApi';
 import type { AchievementItem } from '../../types/project.types';
 import { useAuth } from '../../hooks/useAuth';
 import { 

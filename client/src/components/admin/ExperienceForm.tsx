@@ -8,7 +8,7 @@ import {
   useCreateExperienceMutation,
   useUpdateExperienceMutation,
   useDeleteExperienceMutation,
-} from '../../api/experienceApi';
+} from '../../services/api/experienceApi';
 import type { ExperienceItem } from '../../types/experience.types';
 import { useAuth } from '../../hooks/useAuth';
 import { 

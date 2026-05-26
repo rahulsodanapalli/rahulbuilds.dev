@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import LenisSmoothScroll from '../components/LenisSmoothScroll';
-import CustomCursor from '../components/CustomCursor';
+import Navbar from './Navbar';
+import LenisSmoothScroll from '../common/LenisSmoothScroll';
+import CustomCursor from '../common/CustomCursor';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -18,7 +18,6 @@ export default function MainLayout({ children }: MainLayoutProps) {
   return (
     <LenisSmoothScroll>
       <div className="relative min-h-screen bg-cream text-deep-black font-sans selection:bg-burnt-orange/20 selection:text-deep-black bg-noise">
-        {/* Custom Cursor (currently disabled for performance) */}
         <CustomCursor />
 
         {/* Portfolio Nav — hidden on login/admin pages */}

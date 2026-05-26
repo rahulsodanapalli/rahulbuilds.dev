@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { Layers, Command, CircleDot, Workflow, Activity, Cpu } from 'lucide-react';
-import MagneticButton from '../components/MagneticButton';
-import { useGetSkillsQuery } from '../api/skillsApi';
+import MagneticButton from '../components/common/MagneticButton';
+import { useGetSkillsQuery } from '../services/api/skillsApi';
 import type { SkillItem } from '../types/skill.types';
 
 const CATEGORY_META: Record<string, { icon: React.ReactNode; desc: string }> = {

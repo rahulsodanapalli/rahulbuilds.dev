@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Calendar, CheckCircle2, Shield, Briefcase } from 'lucide-react';
-import { useGetExperiencesQuery } from '../api/experienceApi';
+import { useGetExperiencesQuery } from '../services/api/experienceApi';
 
 export default function Experience() {
   const { data: experiences = [], isLoading } = useGetExperiencesQuery();

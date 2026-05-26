@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../../store';
 import { Shield, Home } from 'lucide-react';
 import { motion } from 'framer-motion';
-import MagneticButton from '../MagneticButton';
+import MagneticButton from '../common/MagneticButton';
 
 export default function AdminFloatingButton() {
   const { isAdmin } = useSelector((state: RootState) => state.auth);

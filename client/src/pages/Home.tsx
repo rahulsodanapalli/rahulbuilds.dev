@@ -10,7 +10,7 @@ const TechStack = React.lazy(() => import('../sections/TechStack'));
 const Mindset = React.lazy(() => import('../sections/Mindset'));
 const CodeShowcase = React.lazy(() => import('../sections/CodeShowcase'));
 const Contact = React.lazy(() => import('../sections/Contact'));
-const Footer = React.lazy(() => import('../sections/Footer'));
+const Footer = React.lazy(() => import('../components/layout/Footer'));
 const AchievementsSection = React.lazy(() => import('../sections/AchievementsSection'));
 
 // Elegant content-placeholder skeleton to prevent Cumulative Layout Shifts (CLS)

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import type { ProjectItem } from '../types/project.types';
+import type { ProjectItem } from '../../types/project.types';
 import { createBaseQuery } from './baseQuery';
 
 export const projectsApi = createApi({

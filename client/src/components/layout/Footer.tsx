@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ArrowUp, Heart, Mail, ShieldAlert, Cpu, Database, Activity } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import MagneticButton from '../components/MagneticButton';
-import { useGetProjectsQuery } from '../api/projectsApi';
-import { useGetSkillsQuery } from '../api/skillsApi';
+import { useGetProjectsQuery } from '../../services/api/projectsApi';
+import { useGetSkillsQuery } from '../../services/api/skillsApi';
+import { SOCIAL_LINKS } from '../../constants';
+import MagneticButton from '../common/MagneticButton';
 
 export default function Footer() {
   const [latency, setLatency] = useState(42);
@@ -158,7 +159,7 @@ export default function Footer() {
           <div className="flex items-center gap-4">
             <MagneticButton>
               <a
-                href="https://github.com/rahulsodanapalli"
+                href={SOCIAL_LINKS.github}
                 target="_blank"
                 rel="noreferrer"
                 className="p-2.5 bg-card-white/[0.03] border border-border-cream/10 rounded-xl text-muted hover:text-cream hover:border-burnt-orange/50 transition-all duration-300 flex items-center justify-center shadow-md"
@@ -172,7 +173,7 @@ export default function Footer() {
 
             <MagneticButton>
               <a
-                href="https://linkedin.com/in/rahul-sodanapalli-0a49062b3"
+                href={SOCIAL_LINKS.linkedin}
                 target="_blank"
                 rel="noreferrer"
                 className="p-2.5 bg-card-white/[0.03] border border-border-cream/10 rounded-xl text-muted hover:text-cream hover:border-burnt-orange/50 transition-all duration-300 flex items-center justify-center shadow-md"
@@ -186,7 +187,7 @@ export default function Footer() {
 
             <MagneticButton>
               <a
-                href="mailto:rahulsodanapalli@gmail.com"
+                href={SOCIAL_LINKS.email}
                 className="p-2.5 bg-card-white/[0.03] border border-border-cream/10 rounded-xl text-muted hover:text-cream hover:border-burnt-orange/50 transition-all duration-300 flex items-center justify-center shadow-md"
                 aria-label="Send Email"
               >

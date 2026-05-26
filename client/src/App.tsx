@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MainLayout from './layouts/MainLayout';
+import MainLayout from './components/layout/MainLayout';
 import Home from './pages/Home';
 import AdminRoute from './guards/AdminRoute';
 import AdminFloatingButton from './components/admin/AdminFloatingButton';

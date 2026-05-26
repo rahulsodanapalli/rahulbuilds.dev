@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import type { AchievementItem } from '../types/project.types';
+import type { AchievementItem } from '../../types/project.types';
 import { createBaseQuery } from './baseQuery';
 
 export const achievementsApi = createApi({

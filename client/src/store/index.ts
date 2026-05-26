@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
-import { authApi } from '../api/authApi';
-import { skillsApi } from '../api/skillsApi';
-import { experienceApi } from '../api/experienceApi';
-import { projectsApi } from '../api/projectsApi';
-import { achievementsApi } from '../api/achievementsApi';
+import { authApi } from '../services/api/authApi';
+import { skillsApi } from '../services/api/skillsApi';
+import { experienceApi } from '../services/api/experienceApi';
+import { projectsApi } from '../services/api/projectsApi';
+import { achievementsApi } from '../services/api/achievementsApi';
+import { contactApi } from '../services/api/contactApi';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [experienceApi.reducerPath]: experienceApi.reducer,
     [projectsApi.reducerPath]: projectsApi.reducer,
     [achievementsApi.reducerPath]: achievementsApi.reducer,
+    [contactApi.reducerPath]: contactApi.reducer,
   },
   middleware: (getDefaultMiddleware: any) =>
     getDefaultMiddleware().concat(
@@ -21,7 +23,8 @@ export const store = configureStore({
       skillsApi.middleware,
       experienceApi.middleware,
       projectsApi.middleware,
-      achievementsApi.middleware
+      achievementsApi.middleware,
+      contactApi.middleware
     ),
 });
 

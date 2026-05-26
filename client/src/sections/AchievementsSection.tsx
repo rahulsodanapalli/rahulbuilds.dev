@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Trophy, Milestone } from 'lucide-react';
-import { useGetAchievementsQuery } from '../api/achievementsApi';
+import { useGetAchievementsQuery } from '../services/api/achievementsApi';
 import type { AchievementItem } from '../types/project.types';
 
 function AnimatedCounter({ value, duration = 1.5 }: { value: number; duration?: number }) {

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import type { SkillItem } from '../types/skill.types';
+import type { SkillItem } from '../../types/skill.types';
 import { createBaseQuery } from './baseQuery';
 
 export const skillsApi = createApi({

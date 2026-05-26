@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Layers, Briefcase, Award, FolderOpen, LogOut, Loader2 } from 'lucide-react';
+import { Shield, Layers, Briefcase, Award, FolderOpen, LogOut, Loader2, Mail } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 
 // Admin forms imports
@@ -9,8 +9,9 @@ import SkillsForm from '../components/admin/SkillsForm';
 import ExperienceForm from '../components/admin/ExperienceForm';
 import ProjectForm from '../components/admin/ProjectForm';
 import AchievementForm from '../components/admin/AchievementForm';
+import MessagesForm from '../components/admin/MessagesForm';
 
-type DashboardTab = 'projects' | 'experience' | 'skills' | 'achievements';
+type DashboardTab = 'projects' | 'experience' | 'skills' | 'achievements' | 'messages';
 
 export default function AdminDashboard() {
   const { logout, email, loading } = useAuth();
@@ -31,6 +32,7 @@ export default function AdminDashboard() {
     { id: 'experience' as DashboardTab, label: 'Career Journey', icon: <Briefcase size={16} /> },
     { id: 'skills' as DashboardTab, label: 'Skills & Armament', icon: <Layers size={16} /> },
     { id: 'achievements' as DashboardTab, label: 'Achievements', icon: <Award size={16} /> },
+    { id: 'messages' as DashboardTab, label: 'Client Inquiries', icon: <Mail size={16} /> },
   ];
 
   return (
@@ -114,6 +116,7 @@ export default function AdminDashboard() {
               {activeTab === 'experience' && <ExperienceForm />}
               {activeTab === 'skills' && <SkillsForm />}
               {activeTab === 'achievements' && <AchievementForm />}
+              {activeTab === 'messages' && <MessagesForm />}
             </motion.div>
           </AnimatePresence>
         </div>

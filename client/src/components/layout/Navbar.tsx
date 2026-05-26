@@ -2,19 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Menu, X, Terminal } from 'lucide-react';
-import { useStore } from '../hooks/useStore';
-import MagneticButton from './MagneticButton';
-
-const NAV_LINKS = [
-  { id: 'hero', label: 'Home' },
-  { id: 'about', label: 'About' },
-  { id: 'experience', label: 'Timeline' },
-  { id: 'projects', label: 'Projects' },
-  { id: 'achievements', label: 'Honors' },
-  { id: 'tech', label: 'Stack' },
-  { id: 'mindset', label: 'Mindset' },
-  { id: 'contact', label: 'Contact' },
-];
+import { useStore } from '../../hooks/useStore';
+import { NAV_LINKS, SOCIAL_LINKS } from '../../constants';
+import MagneticButton from '../common/MagneticButton';
 
 export default function Navbar() {
   const { activeSection, setActiveSection } = useStore();
@@ -65,14 +55,14 @@ export default function Navbar() {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 bg-white/40 p-1 rounded-full border border-border-cream/60 backdrop-blur-md shadow-minimal">
+          <nav className="hidden lg:flex items-center gap-0.5 bg-white/40 p-1 rounded-full border border-border-cream/60 backdrop-blur-md shadow-minimal">
             {NAV_LINKS.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <button
                   key={link.id}
                   onClick={() => handleNavClick(link.id)}
-                  className={`relative px-4 py-2 text-[9px] font-display font-bold uppercase tracking-widest transition-colors duration-300 rounded-full focus:outline-none interactive ${isActive ? 'text-burnt-orange' : 'text-secondary-gray/70 hover:text-deep-black'
+                  className={`relative px-3.5 py-2 text-[9px] font-display font-bold uppercase tracking-widest transition-colors duration-300 rounded-full focus:outline-none interactive ${isActive ? 'text-burnt-orange' : 'text-secondary-gray/70 hover:text-deep-black'
                     }`}
                 >
                   {isActive && (
@@ -87,6 +77,35 @@ export default function Navbar() {
                 </button>
               );
             })}
+
+            {/* Vertical Divider */}
+            <div className="w-[1px] h-3.5 bg-border-cream/80 mx-2" />
+
+            {/* External Links */}
+            <a
+              href={SOCIAL_LINKS.resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative px-3.5 py-2 text-[9px] font-display font-bold uppercase tracking-widest text-secondary-gray/70 hover:text-burnt-orange transition-colors duration-300 rounded-full focus:outline-none interactive flex items-center gap-1"
+            >
+              Resume <span className="text-[7px] text-burnt-orange font-mono">↗</span>
+            </a>
+            <a
+              href={SOCIAL_LINKS.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative px-3.5 py-2 text-[9px] font-display font-bold uppercase tracking-widest text-secondary-gray/70 hover:text-burnt-orange transition-colors duration-300 rounded-full focus:outline-none interactive flex items-center gap-1"
+            >
+              GitHub <span className="text-[7px] text-burnt-orange font-mono">↗</span>
+            </a>
+            <a
+              href={SOCIAL_LINKS.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative px-3.5 py-2 text-[9px] font-display font-bold uppercase tracking-widest text-secondary-gray/70 hover:text-burnt-orange transition-colors duration-300 rounded-full focus:outline-none interactive flex items-center gap-1"
+            >
+              LinkedIn <span className="text-[7px] text-burnt-orange font-mono">↗</span>
+            </a>
           </nav>
 
           {/* Desktop Right Buttons (Admin + Talk) */}
@@ -130,7 +149,7 @@ export default function Navbar() {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="fixed inset-0 top-[60px] bg-cream/98 backdrop-blur-2xl z-30 lg:hidden flex flex-col p-8 border-t border-border-cream/80"
           >
-            <div className="flex flex-col gap-6 my-auto text-center">
+            <div className="flex flex-col gap-5 my-auto text-center">
               {NAV_LINKS.map((link, idx) => {
                 const isActive = activeSection === link.id;
                 return (
@@ -139,8 +158,8 @@ export default function Navbar() {
                     onClick={() => handleNavClick(link.id)}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.04, duration: 0.3 }}
-                    className={`text-lg font-display font-bold tracking-widest uppercase transition-colors interactive ${isActive ? 'text-burnt-orange font-serif italic' : 'text-secondary-gray/70'
+                    transition={{ delay: idx * 0.03, duration: 0.3 }}
+                    className={`text-base font-display font-bold tracking-widest uppercase transition-colors interactive ${isActive ? 'text-burnt-orange font-serif italic' : 'text-secondary-gray/70'
                       }`}
                   >
                     {link.label}
@@ -148,10 +167,46 @@ export default function Navbar() {
                 );
               })}
 
+              {/* Mobile Social & Resume Action Cards */}
+              <motion.div
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: NAV_LINKS.length * 0.03 + 0.1 }}
+                className="grid grid-cols-3 gap-2 mt-4"
+              >
+                <a
+                  href={SOCIAL_LINKS.resume}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 bg-white border border-border-cream/80 text-[9px] font-display font-bold uppercase tracking-widest text-secondary-gray rounded-xl flex flex-col items-center justify-center gap-0.5 interactive shadow-minimal"
+                >
+                  <span>Resume</span>
+                  <span className="text-[7px] text-burnt-orange font-mono">PDF ↗</span>
+                </a>
+                <a
+                  href={SOCIAL_LINKS.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 bg-white border border-border-cream/80 text-[9px] font-display font-bold uppercase tracking-widest text-secondary-gray rounded-xl flex flex-col items-center justify-center gap-0.5 interactive shadow-minimal"
+                >
+                  <span>GitHub</span>
+                  <span className="text-[7px] text-burnt-orange font-mono">CODE ↗</span>
+                </a>
+                <a
+                  href={SOCIAL_LINKS.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="py-3 bg-white border border-border-cream/80 text-[9px] font-display font-bold uppercase tracking-widest text-secondary-gray rounded-xl flex flex-col items-center justify-center gap-0.5 interactive shadow-minimal"
+                >
+                  <span>LinkedIn</span>
+                  <span className="text-[7px] text-burnt-orange font-mono">CONN ↗</span>
+                </a>
+              </motion.div>
+
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: NAV_LINKS.length * 0.03 + 0.2 }}
                 className="mt-6 pt-6 border-t border-border-cream flex flex-col gap-3"
               >
                 <button

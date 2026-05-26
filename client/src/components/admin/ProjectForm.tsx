@@ -8,7 +8,7 @@ import {
   useCreateProjectMutation,
   useUpdateProjectMutation,
   useDeleteProjectMutation,
-} from '../../api/projectsApi';
+} from '../../services/api/projectsApi';
 import type { ProjectItem } from '../../types/project.types';
 import { useAuth } from '../../hooks/useAuth';
 import { 

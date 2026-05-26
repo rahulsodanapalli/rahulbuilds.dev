@@ -1,17 +1,11 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, ArrowRight, Sparkles, Terminal, Activity, Layers, Cpu, ShieldCheck } from 'lucide-react';
-import MagneticButton from '../components/MagneticButton';
-import { useGetProjectsQuery } from '../api/projectsApi';
-import { useGetSkillsQuery } from '../api/skillsApi';
-import { useGetExperiencesQuery } from '../api/experienceApi';
-
-const ROLES = [
-  "Frontend Architect",
-  "React Developer",
-  "AI Integrations Developer",
-  "Creative Engineer"
-];
+import MagneticButton from '../components/common/MagneticButton';
+import { useGetProjectsQuery } from '../services/api/projectsApi';
+import { useGetSkillsQuery } from '../services/api/skillsApi';
+import { useGetExperiencesQuery } from '../services/api/experienceApi';
+import { ROLES } from '../constants';
 
 export default function Hero() {
   const { data: projects = [] } = useGetProjectsQuery();

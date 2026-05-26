@@ -3,7 +3,9 @@ import { useForm } from 'react-hook-form';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, ArrowUpRight, Send, Check, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import MagneticButton from '../components/MagneticButton';
+import MagneticButton from '../components/common/MagneticButton';
+import { useSendContactMessageMutation } from '../services/api/contactApi';
+import { showSuccessToast, showErrorToast } from '../utils/alert';
 
 interface ContactFormInput {
   name: string;
@@ -14,6 +16,7 @@ interface ContactFormInput {
 
 export default function Contact() {
   const [formStatus, setFormStatus] = useState<'idle' | 'submitting' | 'submitted' | 'error'>('idle');
+  const [sendContactMessage] = useSendContactMessageMutation();
 
   const {
     register,
@@ -27,10 +30,11 @@ export default function Contact() {
     console.log("Submitting secure contact request via encrypted payload:", data);
 
     try {
-      // Simulate submission delay
-      await new Promise(resolve => setTimeout(resolve, 1800));
+      // Execute the real server transmission request
+      await sendContactMessage(data).unwrap();
 
       setFormStatus('submitted');
+      showSuccessToast('Engineering brief successfully dispatched!');
 
       // Trigger luxury warm burnt orange and black confetti burst
       const count = 180;
@@ -58,8 +62,13 @@ export default function Contact() {
       }, 5000);
 
     } catch (err) {
-      console.error(err);
+      console.error('Failed to submit engineering brief:', err);
       setFormStatus('error');
+      showErrorToast('Failed to dispatch contact brief. Please try again.');
+      
+      setTimeout(() => {
+        setFormStatus('idle');
+      }, 3000);
     }
   };
 

@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import type { ExperienceItem } from '../types/experience.types';
+import type { ExperienceItem } from '../../types/experience.types';
 import { createBaseQuery } from './baseQuery';
 
 export const experienceApi = createApi({

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
-import { useGetMeQuery } from '../api/authApi';
+import { useGetMeQuery } from '../services/api/authApi';
 import { setCredentials, logOutState } from '../store/authSlice';
 
 interface AdminRouteProps {

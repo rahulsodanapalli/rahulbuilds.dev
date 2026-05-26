@@ -8,7 +8,7 @@ import {
   useCreateSkillMutation,
   useUpdateSkillMutation,
   useDeleteSkillMutation,
-} from '../../api/skillsApi';
+} from '../../services/api/skillsApi';
 import type { SkillItem } from '../../types/skill.types';
 import { useAuth } from '../../hooks/useAuth';
 import { 

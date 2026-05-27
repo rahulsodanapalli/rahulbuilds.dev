@@ -44,13 +44,16 @@ export const showSuccessToast = (message: string) => {
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
+    showCloseButton: true,
+    width: '340px',
     timer: 2500,
     timerProgressBar: true,
     background: '#FFFFFF',
     color: '#111111',
     customClass: {
       popup: 'rounded-xl border border-border-cream font-sans shadow-minimal p-4',
-      title: 'text-xs font-semibold text-deep-black',
+      title: 'text-xs font-semibold text-deep-black pr-6 text-left',
+      closeButton: 'text-secondary-gray hover:text-deep-black focus:outline-none focus:ring-0 shadow-none border-none text-base absolute top-3 right-3 leading-none',
     },
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);
@@ -69,13 +72,16 @@ export const showErrorToast = (message: string) => {
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
+    showCloseButton: true,
+    width: '340px',
     timer: 3000,
     timerProgressBar: true,
     background: '#FFFFFF',
     color: '#111111',
     customClass: {
       popup: 'rounded-xl border border-border-cream font-sans shadow-minimal p-4',
-      title: 'text-xs font-semibold text-deep-black',
+      title: 'text-xs font-semibold text-deep-black pr-6 text-left',
+      closeButton: 'text-secondary-gray hover:text-deep-black focus:outline-none focus:ring-0 shadow-none border-none text-base absolute top-3 right-3 leading-none',
     },
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);
